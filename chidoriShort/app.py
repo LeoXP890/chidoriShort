@@ -89,8 +89,9 @@ def redirect_to_url(short_code):
 
 # --- Inicialização ---
 
+# Crie um contexto de aplicação para garantir que o banco de dados seja criado
+with app.app_context():
+    db.create_all()
+
 if __name__ == '__main__':
-    # Cria o banco de dados e a tabela se não existirem
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)
