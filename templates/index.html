@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chidoriShort - Encurtador de URL</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>chidoriShort ⚡</h1>
+            <p>O encurtador de URLs rápido como um relâmpago.</p>
+        </header>
+
+        <main>
+            <form action="/" method="POST">
+                <input type="url" name="long_url" placeholder="Cole sua URL longa aqui..." required>
+                <button type="submit">Encurtar!</button>
+            </form>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            {% if short_url %}
+            <div class="result">
+                <p>Sua URL encurtada:</p>
+                <div class="short-url-box">
+                    <input type="text" value="{{ short_url }}" id="shortUrlInput" readonly>
+                    <button onclick="copyToClipboard()">Copiar</button>
+                </div>
+            </div>
+            {% endif %}
+        </main>
+    </div>
+
+    <script>
+        function copyToClipboard() {
+            var copyText = document.getElementById("shortUrlInput");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // Para dispositivos móveis
+            document.execCommand("copy");
+            
+            // Feedback visual para o usuário
+            var copyButton = document.querySelector('.short-url-box button');
+            copyButton.innerText = 'Copiado!';
+            setTimeout(() => {
+                copyButton.innerText = 'Copiar';
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
