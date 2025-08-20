@@ -9,14 +9,15 @@ from urllib.parse import urlparse
 
 app = Flask(__name__)
 
-# Configuração do Banco de Dados SQLite
-# Define o caminho do banco de dados dentro da instância do projeto
+# --- CONFIGURAÇÃO SIMPLES PARA SQLITE ---
+# Garanta que esta linha esteja assim:
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///urls.db'
+# -----------------------------------------
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = os.urandom(24) # Chave secreta para mensagens flash
+app.config['SECRET_KEY'] = os.urandom(24) 
 
 db = SQLAlchemy(app)
-
 # --- Modelo do Banco de Dados ---
 
 class Urls(db.Model):
